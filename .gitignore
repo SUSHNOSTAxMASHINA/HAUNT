@@ -1,0 +1,8 @@
+.DS_Store
+*.saver
+*.swp
+*.key
+*.pem
+.env
+.env.*
+node_modules/

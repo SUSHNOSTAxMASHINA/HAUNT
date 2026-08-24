@@ -1,0 +1,15 @@
+{
+  "name": "pi-haunt",
+  "version": "1.0.0",
+  "description": "A self-contained living terminal environment and clean usage footer for pi",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "files": ["extensions", "src", "README.md", "package.json"],
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
+  "pi": {
+    "extensions": ["./extensions/haunt.ts"]
+  }
+}
