@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="image.jpeg" alt="HAUNT cover" width="100%">
+</p>
+
+<p align="center">
+</p>
+
 # П Р И З Р А К  //  H̷A̷U̷N̷T̷
 
 ```text
