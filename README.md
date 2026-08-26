@@ -113,9 +113,7 @@
               previous mark loaded
               face = not a face
               face = [UNRESOLVED]
-```
 
-```text
                   ────────╱╲────────
                        ╱      ╲
                  ·    ╱  ·  ·  ╲    ·
