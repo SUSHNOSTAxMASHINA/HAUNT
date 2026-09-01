@@ -70,11 +70,7 @@ export function installCleanFooter(pi: ExtensionAPI): void {
 					let cost = 0;
 
 					for (const entry of ctx.sessionManager.getEntries()) {
-						const usage = entry.type === "message" && "usage" in entry.message
-							? entry.message.usage
-							: entry.type !== "message" && "usage" in entry
-							? entry.usage
-							: undefined;
+						const usage = entry.type === "message" ? entry.message.usage : entry.usage;
 						if (!usage) continue;
 						input += usage.input;
 						output += usage.output;
