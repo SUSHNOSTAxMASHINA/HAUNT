@@ -19,7 +19,8 @@ const GLYPHS = " .,:;irsXA253hMHGS#9B&@";
 const MACHINE_WIDTH = 140;
 const MACHINE_HEIGHT = 24;
 const MACHINE_FIELD_ROWS = 20;
-const MACHINE_VIEW_MIN_WIDTH = 96;
+const MACHINE_VIEW_MIN_WIDTH = 85;
+const MACHINE_VIEW_MIN_HEIGHT = 50;
 const POSSESS_RNG_ODDS = 0.42 / 60;
 const NORMAL_REFRESH_MS = 420;
 const SMOOTH_RENDER_INTERVAL_MS = 1000 / 10;
@@ -1162,7 +1163,10 @@ export default function haunt(pi: ExtensionAPI) {
     // The possess overlay is itself the full-screen viewer; its custom TUI
     // mode is not necessarily `fullscreen`. Apply the same size cutoff to it.
     if (!possess && tui.mode !== "fullscreen") return "haunt";
-    return tui.terminal.columns >= MACHINE_VIEW_MIN_WIDTH ? "machine" : "haunt";
+    return tui.terminal.columns >= MACHINE_VIEW_MIN_WIDTH &&
+      tui.terminal.rows >= MACHINE_VIEW_MIN_HEIGHT
+      ? "machine"
+      : "haunt";
   };
   const renderMachine = (
     width: number,
@@ -1205,6 +1209,7 @@ export default function haunt(pi: ExtensionAPI) {
       animationTarget ?? animationActivity,
       rows,
       possess,
+      textFrame,
     );
     return lines.map((line) => `${colorFor(state)}${line}${PALETTE.reset}`);
   };
@@ -1277,6 +1282,12 @@ export default function haunt(pi: ExtensionAPI) {
       // header and status footer, so ASCII is the only visualizer shown.
       lines.splice(1, 5, ...ascii.slice(1, -1));
     }
+    // Very short viewports: keep only the top text row (header), drop the
+    // visualizer field and the bottom status row. Header is index 0 in both
+    // braille and ascii layouts.
+    if (tui.terminal.rows <= 15) return lines.slice(0, 1).map((line) =>
+      fit(`${colorFor(viewState())}${line}${PALETTE.reset}`)
+    );
     return lines.map((line) =>
       fit(`${colorFor(viewState())}${line}${PALETTE.reset}`),
     );
