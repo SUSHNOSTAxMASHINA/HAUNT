@@ -107,9 +107,15 @@ final class PossessView: ScreenSaverView {
         NSColor.black.setFill()
         rect.fill()
 
+        // the cells breathe with the room. one density, any display.
+        let density = pow((bounds.width * bounds.height) / (1440 * 900), 0.55)
+        let pointSize = min(28, max(8, 10 * density))
+        if abs(font.pointSize - pointSize) > 0.5 {
+            font = NSFont(name: "Hack Regular", size: pointSize) ?? NSFont.monospacedSystemFont(ofSize: pointSize, weight: .regular)
+        }
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let cellWidth = max(1, font.maximumAdvancement.width)
-        let cellHeight = max(12, font.boundingRectForFont.height + 2)
+        let cellHeight = max(12, font.boundingRectForFont.height + 2 * density)
         let columns = max(1, Int(bounds.width / cellWidth))
         // leave room where the glass is cut away.
         let hasNotch = (window?.screen?.safeAreaInsets.top ?? 0) > 0
