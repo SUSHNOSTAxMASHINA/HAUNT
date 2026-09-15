@@ -1084,6 +1084,7 @@ export default function haunt(pi: ExtensionAPI) {
   let enabled = true;
   let visualizer: Visualizer = "braille";
   let possess = false;
+  let tuiRef: Parameters<typeof renderView>[0] | undefined;
   let smooth = false;
   let textFrame = -1;
   let textProgress = 0;
@@ -1163,8 +1164,9 @@ export default function haunt(pi: ExtensionAPI) {
     // The possess overlay is itself the full-screen viewer; its custom TUI
     // mode is not necessarily `fullscreen`. Apply the same size cutoff to it.
     if (!possess && tui.mode !== "fullscreen") return "haunt";
-    return tui.terminal.columns >= MACHINE_VIEW_MIN_WIDTH &&
-      tui.terminal.rows >= MACHINE_VIEW_MIN_HEIGHT
+    const columns = Number(tui.terminal?.columns ?? 0);
+    const rows = Number(tui.terminal?.rows ?? 0);
+    return columns >= MACHINE_VIEW_MIN_WIDTH && rows >= MACHINE_VIEW_MIN_HEIGHT
       ? "machine"
       : "haunt";
   };
@@ -1301,6 +1303,7 @@ export default function haunt(pi: ExtensionAPI) {
     // terminal viewport instead of the log's scroll position.
     void ctx.ui.custom(
       (tui, _theme, _keybindings, done) => {
+        tuiRef = tui;
         refresh = () => tui.requestRender();
         overlayDone = () => done(undefined);
         return {
@@ -1549,9 +1552,10 @@ export default function haunt(pi: ExtensionAPI) {
       animationTarget = undefined;
       animationBlend = 1;
     }
+    const tui = tuiRef;
     ctx.ui.notify(
       possess
-        ? "the room has taken the whole window"
+        ? `the room has taken the whole window (mode=${tui?.mode ?? "?"} cols=${tui?.terminal?.columns ?? "?"} rows=${tui?.terminal?.rows ?? "?"})`
         : "the room has released the window",
       "info",
     );
