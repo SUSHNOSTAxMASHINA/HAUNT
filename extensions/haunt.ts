@@ -1084,6 +1084,7 @@ export default function haunt(pi: ExtensionAPI) {
   let enabled = true;
   let visualizer: Visualizer = "braille";
   let possess = false;
+  let modeHintShown = false;
   let tuiRef: Parameters<typeof renderView>[0] | undefined;
   let smooth = false;
   let textFrame = -1;
@@ -1304,6 +1305,17 @@ export default function haunt(pi: ExtensionAPI) {
     void ctx.ui.custom(
       (tui, _theme, _keybindings, done) => {
         tuiRef = tui;
+        // regular-mode TUI keeps the large view and top anchoring quiet:
+        // hint the one setting that fixes both, once.
+        if (!modeHintShown && tui.mode !== "fullscreen") {
+          modeHintShown = true;
+          setTimeout(() => {
+            current?.ui.notify(
+              "haunt: large view needs tuiMode fullscreen — add \"tuiMode\": \"fullscreen\" to ~/.pi/agent/settings.json",
+              "warning",
+            );
+          }, 0);
+        }
         refresh = () => tui.requestRender();
         overlayDone = () => done(undefined);
         return {
