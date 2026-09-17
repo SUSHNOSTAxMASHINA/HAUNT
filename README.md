@@ -122,7 +122,9 @@
                        ╲  __  ╱
                         ╲____╱
                   ────────╲╱────────
+```
 
+```text
         pi> extension found
         pi> extension found
         pi> extension found
