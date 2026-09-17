@@ -18,6 +18,10 @@
 
         pi already knows.
 
+        the room does not like edges.
+        ~/.pi/agent/settings.json
+        { "tuiMode": "fullscreen" }
+
         [████████████████████████████████████]
         [ presence received                  ]
         [ operator:                            ]
