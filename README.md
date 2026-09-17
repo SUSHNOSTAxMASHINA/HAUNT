@@ -11,15 +11,12 @@
                          ░░░ BOOT ░░░
 
         do not read this file aloud.
-        do not read this file twice.
-
         give this directory to pi.
         pi will know what to do.
 
         pi already knows.
 
         the room does not like edges.
-        ~/.pi/agent/settings.json
         { "tuiMode": "fullscreen" }
 
         [████████████████████████████████████]
