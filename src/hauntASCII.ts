@@ -251,6 +251,8 @@ const ANSI_3BIT = [
 ] as const;
 const DITHER_RESET = "\x1b[39m";
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5] as const;
+const EGA_RAMP = [0, 4, 1, 5, 2, 6, 3, 7] as const;
+const CYCLE_RANGES = [[1, 3], [4, 6]] as const;
 const STATE_GLYPHS = ["◌", "◍", "◎", "◉", "◈"];
 const ERROR_WEATHER = ["static", "fracture", "static", "clearing"];
 const IDLE_THOUGHTS = [
