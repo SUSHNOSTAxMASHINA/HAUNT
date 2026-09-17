@@ -163,21 +163,3 @@
         [ C̷O̷N̷T̷E̷N̷T̷  R̷E̷M̷O̷V̷E̷D̷ ]
         [ НЕ ПРОЧИТАНО ]
         [ DO NOT REASSEMBLE ]
-
-```
-
-## Troubleshooting
-
-**Large GHOST // MACHINE view never appears, and the overlay scrolls with the chat log.**
-
-The large view and the top-anchored overlay require pi's fullscreen TUI mode.
-If `~/.pi/agent/settings.json` is missing `"tuiMode": "fullscreen"`, pi runs in
-`"regular"` mode and haunt stays in the small SPECTRE view at any window size.
-The extension warns once when it detects this. Fix:
-
-```json
-{ "tuiMode": "fullscreen" }
-```
-
-Restart pi after editing. (Possess also bypasses this, but the overlay behaves
-best in fullscreen mode.)
