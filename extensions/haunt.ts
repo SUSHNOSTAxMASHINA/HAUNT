@@ -1062,7 +1062,7 @@ export function panel(
       `${sessionActive ? "↺" : idleActive ? "?" : errorActive ? "※" : toolActive ? "◇" : stateGlyph(attentionActive, thinking, transition)}  ${mood}  /  ${possessView ? possessTime : sessionActive ? sessionWeather : idleActive ? "idle" : errorActive ? weather : toolActive ? sensation : breath}  /  ${possessView ? possessDate : `${36 + (textFrame % 7)}°`}`,
       w,
     ),
-    row(scan.repeat(Math.max(0, w - 14)), w),
+    row(scan.repeat(w), w),
     ...field.map((line) => row(line, w)),
     row(whisperLine, w),
     row(
