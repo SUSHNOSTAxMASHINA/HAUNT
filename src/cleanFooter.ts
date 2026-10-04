@@ -50,6 +50,14 @@ export function installCleanFooter(pi: ExtensionAPI): void {
 		void updateBalance(ctx);
 		balanceTimer = setInterval(() => void updateBalance(ctx), 60_000);
 
+		// Mirror pi's auto-compact threshold (see shouldCompact in core/compaction):
+		// 100% = tokens == contextWindow - reserveTokens; beyond that shows >100%.
+		const compaction = pi.getSettings().compaction;
+		const reserveFor = (model: { provider: string; id: string } | undefined): number => {
+			const override = model ? compaction?.modelOverrides?.[`${model.provider}/${model.id}`]?.reserveTokens : undefined;
+			return override ?? compaction?.reserveTokens ?? 16_384;
+		};
+
 		ctx.ui.setFooter((tui, theme, footerData) => {
 			requestRender = () => tui.requestRender();
 			const unsubscribe = footerData.onBranchChange(refresh);
@@ -78,7 +86,10 @@ export function installCleanFooter(pi: ExtensionAPI): void {
 					}
 
 					const context = ctx.getContextUsage();
-					const percent = context?.percent == null ? "?" : `${context.percent.toFixed(1)}%`;
+					const contextWindow = context?.contextWindow ?? ctx.model?.contextWindow ?? 0;
+					const threshold = contextWindow - reserveFor(ctx.model);
+					const limit = threshold > 0 ? threshold : contextWindow;
+					const percent = context?.tokens == null || limit <= 0 ? "?" : `${((context.tokens / limit) * 100).toFixed(1)}%`;
 					const openRouterBalance = balance == null ? "—" : `${balance.toFixed(2)}`;
 					const left = theme.fg("dim", `↑${formatTokens(input)}  ↓${formatTokens(output)}  ↑$${cost.toFixed(3)}  ↓$${openRouterBalance}  ${percent}`);
 					let model = ctx.model?.name ?? ctx.model?.id ?? "no-model";
