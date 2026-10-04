@@ -6,3 +6,7 @@
 .env
 .env.*
 node_modules/
+
+# local-only raw material (large loops + personal pull list)
+Assets/
+HauntDMX/

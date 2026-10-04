@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "A self-contained living terminal environment and clean usage footer for pi",
   "keywords": ["pi-package"],
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "files": ["extensions", "src", "README.md", "package.json"],
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
